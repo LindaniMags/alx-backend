@@ -47,9 +47,9 @@ class Server:
 
         indexed_dataset = self.indexed_dataset()
 
-        page_idx = [idx for idx in range(index, len(
-            self.dataset())) if idx in indexed_dataset][:page_size]
-        page = [indexed_dataset[item] for item in page_idx]
+        page_idx = [i for i in range(index, len(
+            self.dataset())) if i in indexed_dataset][:page_size]
+        page = [indexed_dataset[i] for i in page_idx]
 
         return {
             'index': index,
