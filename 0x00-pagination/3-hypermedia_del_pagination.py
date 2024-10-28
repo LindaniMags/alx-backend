@@ -43,17 +43,24 @@ class Server:
         """
         ensures user does not miss items from dataset when changing page.
         """
-        assert 0 <= index < len(self.dataset())
-
-        indexed_dataset = self.indexed_dataset()
-
-        page_idx = [i for i in range(index, len(
-            self.dataset())) if i in indexed_dataset][:page_size]
-        page = [indexed_dataset[i] for i in page_idx]
-
+        i_dataset = self.indexed_dataset()
+        assert index is not None and index >= 0 and index <= max(
+            i_dataset.keys())
+        count = 0
+        data = []
+        next_index = None
+        start_idx = index if index else 0
+        for i, item in i_dataset.items():
+            if i >= start_idx and count < page_size:
+                data.append(item)
+                count += 1
+                continue
+            if count == page_size:
+                next_index = i
+                break
         return {
             'index': index,
-            'next_index': page_idx[-1] + 1 if page_idx else None,
-            'page_size': len(page),
-            'data': page
+            'next_index': next_index,
+            'page_size': len(data),
+            'data': data,
         }
