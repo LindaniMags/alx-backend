@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Get locale from request
+Parametrize templates.
 """
 from flask_babel import Babel
 from flask import Flask, render_template, request
@@ -29,13 +29,13 @@ def get_locale() -> str:
     return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
-@app.route("/")
+@app.route('/')
 def get_index() -> str:
     """
     Index page
     """
-    return render_template("2-index.html")
+    return render_template('3-index.html')
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
