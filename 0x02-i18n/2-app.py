@@ -1,14 +1,12 @@
 #!/usr/bin/env python3
-"""
-Get locale from request
+"""A Basic Flask app.
 """
 from flask_babel import Babel
 from flask import Flask, render_template, request
 
 
 class Config:
-    """
-    Initialize Config
+    """Represents a Flask Babel configuration.
     """
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
@@ -23,19 +21,17 @@ babel = Babel(app)
 
 @babel.localeselector
 def get_locale() -> str:
-    """
-    determines the best match with our supported languages
+    """Retrieves the locale for a web page.
     """
     return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
-@app.route("/")
+@app.route('/')
 def get_index() -> str:
+    """The home/index page.
     """
-    Index page
-    """
-    return render_template("2-index.html")
+    return render_template('2-index.html')
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
