@@ -2,25 +2,22 @@
 """
 Get locale from request
 """
-
+from flask_babel import Babel
 from flask import Flask, render_template, request
-from flask_babel import Babel, _
-from typing import List
-
-app = Flask(__name__)
 
 
 class Config:
     """
     Initialize Config
     """
-    LANGUAGES = ['en', 'fr']
-    BABEL_DEFAULT_LOCALE = 'en'
-    BABEL_DEFAULT_TIMEZONE = 'UTC'
+    LANGUAGES = ["en", "fr"]
+    BABEL_DEFAULT_LOCALE = "en"
+    BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
+app = Flask(__name__)
 app.config.from_object(Config)
-
+app.url_map.strict_slashes = False
 babel = Babel(app)
 
 
@@ -29,16 +26,16 @@ def get_locale() -> str:
     """
     determines the best match with our supported languages
     """
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
-@app.route('/')
-def index():
+@app.route("/")
+def get_index() -> str:
     """
     Index page
     """
-    return render_template('2-index.html')
+    return render_template("2-index.html")
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000)
